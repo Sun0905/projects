@@ -1,0 +1,97 @@
+<!-- 
+让所有小球运动起来
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<script>
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		var max = 35;
+		var str = "";
+		var balls = [];
+		for(var i = 0; i < max; i++){
+			str += '<div class="ball"></div>'
+		}
+		document.querySelector('body').innerHTML += str;
+		var objs = document.querySelectorAll('.ball');
+		function rand(min,max){
+			var temp = Math.random() * (max - min + 1) + min;
+			return Math.floor(temp);
+		}
+		for(var i = 0; i < max; i++){
+			var r = rand(5,100);
+			balls.push({
+				o: objs[i],
+				d: r,
+				x: rand(0,sw - r),
+				y: rand(0,sh - r),
+				dx: 1,
+				dy: 1,
+				sx: rand(1,7),
+				sy: rand(1,7),
+				// 小球颜色
+				bg: "rgba("+
+					rand(0,255) +","+
+					rand(0,255) +","+
+					rand(0,255) +","+
+					rand(4,10) / 10 +")"
+			});
+		}
+		for(var i = 0;i < max; i++){
+			balls[i].o.style.left = balls[i].x + 'px';
+			balls[i].o.style.top = balls[i].y + 'px';
+			balls[i].o.style.width = balls[i].d + 'px';
+			balls[i].o.style.height = balls[i].d + 'px';
+			balls[i].o.style.background = balls[i].bg;
+		}
+		function move(){
+			for(var i = 0;i < max;i++){
+				balls[i].x = balls[i].x + balls[i].sx*balls[i].dx;
+				balls[i].y = balls[i].y + balls[i].sy*balls[i].dy;
+			if (balls[i].x >= sw - balls[i].d || balls[i].x <= 0) {
+				/* 修正边界处小球的left值
+				 * 因为需要修正的结果有两种，因此使用三目运算符
+				*/
+				(balls[i].x <=0 ) ? balls[i].x = 0 : balls[i].x = sw - balls[i].d;
+				balls[i].dx = -balls[i].dx;
+				balls[i].x = balls[i].x + balls[i].sx*balls[i].dx;
+			}
+			if (balls[i].y >= sh - balls[i].d || balls[i].y <= 0){
+				/* 修正边界处小球的top值
+				 * 因为需要修正的结果有两种，因此使用三目运算符
+				*/
+				(balls[i].y <=0 ) ? balls[i].y = 0 : balls[i].y = sh - balls[i].d;
+				balls[i].dy = -balls[i].dy;
+				balls[i].y = balls[i].y + balls[i].sy*balls[i].dy;
+			}
+				balls[i].o.style.left = balls[i].x + "px";
+			balls[i].o.style.top = balls[i].y + "px";
+			}
+		}
+		setInterval(move,5);
+	</script>
+</body>
+</html>

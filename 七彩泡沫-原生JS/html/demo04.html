@@ -1,0 +1,58 @@
+<!-- 将left,top移动的值设置为参数
+ 从而控制小球水平，垂直方向的速度
+ 从而改变小球的运动轨迹
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-color: #333;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		var ball = document.querySelector(".ball");
+		var x = 0, y = 0, dx = 1, dy = 1;
+		// sx: left改变值，sy：top改变值
+		var sx = 1, sy = 2;
+		function move(){
+			x = x + sx*dx;
+			y = y + sy*dy;
+			if (x >= 400 || x <= 0) {
+				dx = -dx;
+				x = x + sx*dx;
+			}
+			if (y >= 400 || y <= 0){
+				dy = -dy;
+				y = y + sy*dy;
+			}
+			ball.style.left = x + "px";
+			ball.style.top = y + "px";
+		}
+		// 间隔设置为50ms
+		setInterval(move,50);
+		move();
+	</script>
+</body>
+</html>

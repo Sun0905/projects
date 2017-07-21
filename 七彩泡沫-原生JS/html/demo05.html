@@ -1,0 +1,53 @@
+<!-- 
+颜色的随机选择
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		ul{
+			border: 2px solid grey;
+			padding: 20px;
+		}
+		li{
+			background-color: #eee;
+			margin: 10px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>11</li>
+		<li>222</li>
+		<li>3333</li>
+		<li>44444</li>
+	</ul>
+	<script>
+		//获取所有的li对象 
+		var objs = document.querySelectorAll("li");
+		// 查看是否成功获取到所有的li对象
+		console.log(objs);
+		// 数组存放四种颜色
+		var colors = ["pink","blue","yellow","green","red","white","grey"]
+		console.log(colors.length);
+		// 对每一个li对象设置颜色
+		for(var i = 0; i < objs.length ; i++){
+			// 随机获取colors[i], i: 0 - 6 
+			var r = Math.floor(Math.random()*colors.length);
+			objs[i].style.background = colors[r];
+		}
+	</script>
+</body>
+</html>
+<!-- 		 
+* Math对象：单体内置对象，即不依赖宿主环境，在程序执行之前就已经存在，保存数学公式和信息
+* Math.random()：返回大于等于0小于1的一个随机数
+* Math.floor: 向下取整
+* 获取某个整数范围的随机值
+* 随机值 = Math.floor(Math.random()*总个数+第一个值)
+* 例如获取 2 - 9之间的随机数
+* 随机值 = Math.floor(Math.random()*8 + 2) 
+-->

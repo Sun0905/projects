@@ -1,0 +1,76 @@
+<!-- 
+边界值修正：假设屏幕宽度是400px，left每次移动的值是205px，
+这样当第二次移动时，小球就跑出去了
+解决方法：当移动超出屏幕宽度时，将小球的left值设置为最大值：屏幕宽度-小球宽度
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		var obj = document.querySelector(".ball");
+		var ball = {
+			o: obj,
+			x: 0,
+			y: 0,
+			dx: 1,
+			dy: 1,
+			sx: 1,
+			sy: 2
+		}
+		function move(){
+			ball.x = ball.x + ball.sx*ball.dx;
+			ball.y = ball.y + ball.sy*ball.dy;
+			if (ball.x >= sw - 100 || ball.x <= 0) {
+				/* 修正边界处小球的left值
+				 * 因为需要修正的结果有两种，因此使用三目运算符
+				*/
+				(ball.x <=0 ) ? ball.x = 0 : ball.x = sw - 100;
+				ball.dx = -ball.dx;
+				ball.x = ball.x + ball.sx*ball.dx;
+			}
+			if (ball.y >= sh - 100 || ball.y <= 0){
+				/* 修正边界处小球的top值
+				 * 因为需要修正的结果有两种，因此使用三目运算符
+				*/
+				(ball.y <=0 ) ? ball.y = 0 : ball.y = sh - 100;
+				ball.dy = -ball.dy;
+				ball.y = ball.y + ball.sy*ball.dy;
+			}
+			ball.o.style.left = ball.x + "px";
+			ball.o.style.top = ball.y + "px";
+		}
+		setInterval(move,50);
+		move();
+	</script>
+</body>
+</html>

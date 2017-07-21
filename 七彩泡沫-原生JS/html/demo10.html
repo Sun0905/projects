@@ -1,0 +1,95 @@
+<!-- 
+1.让多个小球都不同地方产生
+	即将初始的x,y值做成随机数
+2.让小球的大小不一样
+	即将小球的宽度，高度做成随机数
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<script>
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		var max = 5;
+		var str = "";
+		var balls = [];
+		for(var i = 0; i < max; i++){
+			str += '<div class="ball"></div>'
+		}
+		document.querySelector('body').innerHTML += str;
+		var objs = document.querySelectorAll('.ball');
+		// 产生随机数的函数
+		function rand(min,max){
+			var temp = Math.random() * (max - min + 1) + min;
+			return Math.floor(temp);
+		}
+		for(var i = 0; i < max; i++){
+			// 小球直径设置为5-100之间的随机整数
+			var r = rand(5,100);
+			balls.push({
+				o: objs[i],
+				// 小球的直径
+				d: r,
+				// 小球初始所在的left值
+				x: rand(0,sw - r),
+				// 小球初始所在的top值
+				y: rand(0,sh - r),
+				dx: 1,
+				dy: 1,
+				// 水平方向的偏移量随机化
+				sx: rand(1,7),
+				// 垂直方向的偏移量随机化
+				sy: rand(1,7)
+			})
+		}
+		/* 查看小球 */
+		for(var i = 0;i < max; i++){
+			balls[i].o.style.left = balls[i].x + 'px';
+			balls[i].o.style.top = balls[i].y + 'px';
+			balls[i].o.style.width = balls[i].d + 'px';
+			balls[i].o.style.height = balls[i].d + 'px';
+		}
+		// function move(){
+		// 	ball.x = ball.x + ball.sx*ball.dx;
+		// 	ball.y = ball.y + ball.sy*ball.dy;
+		// 	if (ball.x >= sw - 100 || ball.x <= 0) {
+		// 		(ball.x <=0 ) ? ball.x = 0 : ball.x = sw - 100;
+		// 		ball.dx = -ball.dx;
+		// 		ball.x = ball.x + ball.sx*ball.dx;
+		// 	}
+		// 	if (ball.y >= sh - 100 || ball.y <= 0){
+		// 		(ball.y <=0 ) ? ball.y = 0 : ball.y = sh - 100;
+		// 		ball.dy = -ball.dy;
+		// 		ball.y = ball.y + ball.sy*ball.dy;
+		// 	}
+		// 	ball.o.style.left = ball.x + "px";
+		// 	ball.o.style.top = ball.y + "px";
+		// }
+		// setInterval(move,50);
+		// move();
+	</script>
+</body>
+</html>

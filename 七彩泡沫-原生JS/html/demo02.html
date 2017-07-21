@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-color: #333;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		// 获取小球对象
+		var ball = document.querySelector(".ball");
+		// 初始化left,top值；水平方向，垂直方向
+		var x = 0, y = 0, dx = 1, dy = 1;
+		// 声明定义move函数
+		function move(){
+			x = x + 20*dx;
+			y = y + 20*dy;
+			// 超出范围时，水平方向dx设置为-1，使得left值减小
+			if (x >= 400 || x <= 0) {
+				dx = -dx;
+				x = x + 20*dx;
+			}
+			// 超出范围时，垂直方向dy设置为-1，使得top值减小
+			if (y >= 400 || y <= 0){
+				dy = -dy;
+				y = y + 20*dy;
+			}
+			ball.style.left = x + "px";
+			ball.style.top = y + "px";
+		}
+		setInterval(move,1000);
+		move();
+	</script>
+</body>
+</html>

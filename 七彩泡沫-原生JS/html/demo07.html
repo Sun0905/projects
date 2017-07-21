@@ -1,0 +1,69 @@
+<!-- 
+这里大部分变量都是与小球相关的，因此可以用一个Json对象来表示小球
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		// 获取屏幕宽高
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		// 手动改变浏览器宽高时，显示的宽高能实时发生变化
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		var obj = document.querySelector(".ball");
+		var ball = {
+			o: obj,
+			x: 0,
+			y: 0,
+			dx: 1,
+			dy: 1,
+			sx: 1,
+			sy: 2
+		}
+		function move(){
+			ball.x = ball.x + ball.sx*ball.dx;
+			ball.y = ball.y + ball.sy*ball.dy;
+			if (ball.x >= sw - 100 || ball.x <= 0) {
+				ball.dx = -ball.dx;
+				ball.x = ball.x + ball.sx*ball.dx;
+			}
+			if (ball.y >= sh - 100 || ball.y <= 0){
+				ball.dy = -ball.dy;
+				ball.y = ball.y + ball.sy*ball.dy;
+			}
+			ball.o.style.left = ball.x + "px";
+			ball.o.style.top = ball.y + "px";
+		}
+		// 间隔设置为50ms
+		setInterval(move,50);
+		move();
+	</script>
+</body>
+</html>

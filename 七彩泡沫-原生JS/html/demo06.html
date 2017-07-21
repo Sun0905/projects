@@ -1,0 +1,65 @@
+<!-- 
+1.将小球的运动范围扩大到整个页面
+手动改变页面大小时，
+2.手动改变页面大小时，小球的运动范围也随之改变
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		// 获取屏幕宽高
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		// 手动改变浏览器宽高时，显示的宽高能实时发生变化
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		var ball = document.querySelector(".ball");
+		var x = 0, y = 0, dx = 1, dy = 1;
+		// sx: left改变值，sy：top改变值
+		var sx = 1, sy = 2;
+		function move(){
+			x = x + sx*dx;
+			y = y + sy*dy;
+			if (x >= 400 || x <= 0) {
+				dx = -dx;
+				x = x + sx*dx;
+			}
+			if (y >= 400 || y <= 0){
+				dy = -dy;
+				y = y + sy*dy;
+			}
+			ball.style.left = x + "px";
+			ball.style.top = y + "px";
+		}
+		// 间隔设置为50ms
+		setInterval(move,50);
+		move();
+	</script>
+</body>
+</html>

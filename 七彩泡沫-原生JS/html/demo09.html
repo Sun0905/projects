@@ -1,0 +1,82 @@
+<!-- 
+动态生成多个小球
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>colorful bubble</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.ball{
+			width: 100px;
+			height: 100px;
+			background-color: blue;
+			position: absolute;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<p>屏幕当前宽高：<span></span></p>
+	<div class="box">
+		<div class="ball"></div>
+	</div>
+	<script>
+		var sw = document.documentElement.clientWidth;
+		var sh = document.documentElement.clientHeight;
+		var screen_wh = document.querySelector("span");
+		screen_wh.innerHTML = sw +"&times;" +sh; 
+		window.onresize = function(){
+			sw = document.documentElement.clientWidth;
+			sh = document.documentElement.clientHeight;
+			screen_wh.innerHTML = sw +"&times;" +sh;
+		}
+		/* 动态生成5个小球 */
+		var max = 5;
+		var str = "";
+		//创建一个数组，存放所有小球
+		var balls = [];
+		/* 在html页面中创建多个div */
+		for(var i = 0; i < max; i++){
+			// 在body中添加div
+			str += '<div class="ball"></div>'
+		}
+		document.querySelector('body').innerHTML += str;
+		/* 创建多个小球对象 */
+		var objs = document.querySelectorAll('.ball');
+		for(var i = 0; i < max; i++){
+			balls.push({
+				o: objs[i],
+				x: 0,
+				y:0,
+				dx: 1,
+				dy: 1,
+				sx: 7,
+				sy: 3
+			})
+		}
+		// function move(){
+		// 	ball.x = ball.x + ball.sx*ball.dx;
+		// 	ball.y = ball.y + ball.sy*ball.dy;
+		// 	if (ball.x >= sw - 100 || ball.x <= 0) {
+		// 		(ball.x <=0 ) ? ball.x = 0 : ball.x = sw - 100;
+		// 		ball.dx = -ball.dx;
+		// 		ball.x = ball.x + ball.sx*ball.dx;
+		// 	}
+		// 	if (ball.y >= sh - 100 || ball.y <= 0){
+		// 		(ball.y <=0 ) ? ball.y = 0 : ball.y = sh - 100;
+		// 		ball.dy = -ball.dy;
+		// 		ball.y = ball.y + ball.sy*ball.dy;
+		// 	}
+		// 	ball.o.style.left = ball.x + "px";
+		// 	ball.o.style.top = ball.y + "px";
+		// }
+		// setInterval(move,50);
+		// move();
+	</script>
+</body>
+</html>
